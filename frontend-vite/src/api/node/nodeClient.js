@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { API_CONFIG } from '../config';
 
 const nodeClient = axios.create({
@@ -10,9 +10,9 @@ const nodeClient = axios.create({
 
 nodeClient.interceptors.response.use(
   (response) => response,
-  (error: AxiosError) => {
-    // error logging
-    const message = (error.response?.data as any)?.message || error.message;
+  (error) => {
+    // Error logging logic remains the same
+    const message = error.response?.data?.message || error.message;
     console.error('API Error:', message);
     return Promise.reject(error);
   }

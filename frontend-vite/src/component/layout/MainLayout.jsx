@@ -4,7 +4,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { Button } from '../common/Button';
 import { Sun, Moon, LogOut, Menu, X, Home, Mic, Briefcase } from 'lucide-react';
 
-export const MainLayout = ({ children }: { children: React.ReactNode }) => {
+export const MainLayout = ({ children }) => {
   const { theme, toggleTheme } = useTheme();
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const location = useLocation(); 

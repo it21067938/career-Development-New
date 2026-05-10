@@ -1,27 +1,12 @@
-import type { ReactNode } from "react";
+import React from "react";
 
-export interface Column<T> {
-  header: string;
-  accessor: keyof T | ((item: T) => ReactNode);
-  className?: string;
-  width?: string;
-}
-
-interface TableProps<T> {
-  columns: Column<T>[];
-  data: T[];
-  isLoading?: boolean;
-  emptyMessage?: string;
-  renderRow?: (item: T, index: number) => ReactNode;
-}
-
-export const Table = <T,>({ 
+export const Table = ({ 
   columns, 
   data, 
   isLoading, 
   emptyMessage = "No data available",
   renderRow
-}: TableProps<T>) => {
+}) => {
   return (
     <div className="w-full overflow-hidden bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800">
       <div className="overflow-x-auto custom-scrollbar">
@@ -32,7 +17,7 @@ export const Table = <T,>({
                 <th 
                   key={idx} 
                   style={{ width: col.width }}
-                  className={`px-6 py-4 text-[11px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest ${col.className}`}
+                  className={`px-6 py-4 text-[11px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest ${col.className || ''}`}
                 >
                   {col.header}
                 </th>
@@ -50,7 +35,7 @@ export const Table = <T,>({
                   ))}
                 </tr>
               ))
-            ) : data.length > 0 ? (
+            ) : data && data.length > 0 ? (
               data.map((item, rowIdx) => (
                 renderRow ? (
                   renderRow(item, rowIdx)
@@ -62,11 +47,11 @@ export const Table = <T,>({
                     {columns.map((col, colIdx) => (
                       <td 
                         key={colIdx} 
-                        className={`px-6 py-4 text-[13.5px] font-medium text-gray-600 dark:text-gray-300 ${col.className}`}
+                        className={`px-6 py-4 text-[13.5px] font-medium text-gray-600 dark:text-gray-300 ${col.className || ''}`}
                       >
                         {typeof col.accessor === "function" 
                           ? col.accessor(item) 
-                          : (item[col.accessor] as ReactNode)}
+                          : item[col.accessor]}
                       </td>
                     ))}
                   </tr>

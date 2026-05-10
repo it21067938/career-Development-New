@@ -1,16 +1,5 @@
+import React from "react";
 import { Loader2 } from "lucide-react";
-import type { ButtonHTMLAttributes, ReactNode } from "react";
-
-type Variant = "primary" | "secondary" | "danger" | "ghost";
-type Size = "sm" | "md" | "lg";
-
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: Variant;
-  size?: Size;
-  loading?: boolean;
-  icon?: ReactNode;
-  iconOnly?: boolean;
-}
 
 const styles = {
   base: "inline-flex items-center justify-center gap-1.5 font-medium rounded-lg transition-all duration-150 cursor-pointer disabled:opacity-60 disabled:pointer-events-none",
@@ -28,9 +17,15 @@ const styles = {
 };
 
 export const Button = ({
-  variant = "primary", size = "md", loading, icon, iconOnly,
-  className = "", children, ...props
-}: ButtonProps) => (
+  variant = "primary", 
+  size = "md", 
+  loading = false, 
+  icon = null, 
+  iconOnly = false,
+  className = "", 
+  children, 
+  ...props
+}) => (
   <button
     className={`${styles.base} ${styles.variant[variant]} ${styles.size[size]} ${iconOnly ? "w-9 px-0" : ""} ${className}`}
     disabled={loading || props.disabled}

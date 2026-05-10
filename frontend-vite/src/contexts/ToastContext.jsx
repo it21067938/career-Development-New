@@ -1,17 +1,17 @@
 import React, { createContext, useContext, useState, useCallback } from "react";
 import { Toast } from "../component/common/Toast";
 
-type ToastType = "success" | "error" | "info" | "warning";
-interface ToastContextType {
-  showToast: (type: ToastType, title: string, message: string) => void;
-}
+const ToastContext = createContext(undefined);
 
-const ToastContext = createContext<ToastContextType | undefined>(undefined);
+export const ToastProvider = ({ children }) => {
+  const [state, setState] = useState({ 
+    isOpen: false, 
+    title: "", 
+    message: "", 
+    type: "info" 
+  });
 
-export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
-  const [state, setState] = useState({ isOpen: false, title: "", message: "", type: "info" as ToastType });
-
-  const showToast = useCallback((type: ToastType, title: string, message: string) => {
+  const showToast = useCallback((type, title, message) => {
     setState({ isOpen: true, type, title, message });
   }, []);
 

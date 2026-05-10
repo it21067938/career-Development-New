@@ -1,29 +1,21 @@
 import React, { useState } from 'react';
-import { Upload, ChevronRight, CheckCircle, Loader2 } from 'lucide-react';
+import { Upload, ChevronRight, CheckCircle } from 'lucide-react';
 import { Button } from '../common/Button';
 import { Toast } from '../common/Toast';
 import { analyzeCVForInterview } from '../../services/interviewService';
-import type { CVData } from '../../types/interview';
 
-interface Props {
-  cvData: CVData;
-  setCvData: (d: CVData) => void;
-  jobDescription: string;
-  setJobDescription: (s: string) => void;
-  onNext: () => void;
-}
-
+// Props interface eka ain kara
 export const CVSetupStep = ({
   cvData, setCvData, jobDescription, setJobDescription, onNext
-}: Props) => {
-  const [file, setFile]               = useState<File | null>(null);
+}) => {
+  const [file, setFile] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [analyzed, setAnalyzed]       = useState(false);
-  const [toast, setToast]             = useState({
-    open: false, title: '', msg: '', type: 'info' as any
+  const [analyzed, setAnalyzed] = useState(false);
+  const [toast, setToast] = useState({
+    open: false, title: '', msg: '', type: 'info'
   });
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e) => {
     if (e.target.files?.[0]) {
       setFile(e.target.files[0]);
       setAnalyzed(false);
@@ -97,8 +89,8 @@ export const CVSetupStep = ({
         {analyzed && (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3 pt-2 animate-fade-in">
             {[
-              { label: 'Role',       value: cvData.role },
-              { label: 'Level',      value: cvData.experience_level },
+              { label: 'Role',      value: cvData.role },
+              { label: 'Level',     value: cvData.experience_level },
               { label: 'Education',  value: cvData.education || 'N/A' },
             ].map((item, i) => (
               <div key={i} className="bg-gray-50 dark:bg-gray-800 rounded-xl p-3">
@@ -113,7 +105,7 @@ export const CVSetupStep = ({
           </div>
         )}
 
-        {analyzed && cvData.skills.length > 0 && (
+        {analyzed && cvData.skills && cvData.skills.length > 0 && (
           <div className="flex flex-wrap gap-2 pt-1">
             {cvData.skills.slice(0, 10).map((skill, i) => (
               <span key={i} className="px-2.5 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-full text-xs font-medium border border-gray-200 dark:border-gray-700">

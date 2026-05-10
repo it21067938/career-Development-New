@@ -5,10 +5,10 @@ import { InterviewStep } from '../component/interview/InterviewStep';
 import { ResultsStep } from '../component/interview/ResultsStep';
 import { Toast } from '../component/common/Toast';
 import { generateQuestions } from '../services/interviewService';
-import type { CVData, Question, AnswerResult, InterviewStep as StepType } from '../types/interview';
 
-const StepIndicator = ({ step }: { step: StepType }) => {
-  const order: Record<StepType, number> = {
+
+const StepIndicator = ({ step }) => {
+  const order = {
     setup: 0, loading: 1, interview: 1, results: 2
   };
   const current = order[step];
@@ -20,8 +20,8 @@ const StepIndicator = ({ step }: { step: StepType }) => {
         { key: 'interview', label: 'Interview' },
         { key: 'results', label: 'Results' },
       ].map((s, i) => {
-        const isActive = order[s.key as StepType] === current;
-        const isDone = order[s.key as StepType] < current;
+        const isActive = order[s.key] === current;
+        const isDone = order[s.key] < current;
         return (
           <React.Fragment key={s.key}>
             <div className={`flex items-center gap-1.5 text-xs font-semibold ${isActive ? 'text-primary-600 dark:text-primary-400'
@@ -47,16 +47,16 @@ const StepIndicator = ({ step }: { step: StepType }) => {
 };
 
 const MocSessions = () => {
-  const [step, setStep] = useState<StepType>('setup');
-  const [cvData, setCvData] = useState<CVData>({
+  const [step, setStep] = useState('setup');
+  const [cvData, setCvData] = useState({
     role: '', industry: '', experience_level: '',
     years_of_experience: '', education: '', skills: []
   });
   const [jobDescription, setJobDescription] = useState('');
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [results, setResults] = useState<AnswerResult[]>([]);
+  const [questions, setQuestions] = useState([]);
+  const [results, setResults] = useState([]);
   const [toast, setToast] = useState({
-    open: false, title: '', msg: '', type: 'info' as any
+    open: false, title: '', msg: '', type: 'info'
   });
 
   const handleGenerateQuestions = async () => {

@@ -58,7 +58,6 @@
 // };
 
 
-
 import { useState, useRef, useCallback } from 'react';
 
 export const useSpeechRecognition = () => {
@@ -66,8 +65,8 @@ export const useSpeechRecognition = () => {
   const [isListening, setIsListening] = useState(false);
   const [isSupported] = useState(true); 
   
-  const socketRef = useRef<WebSocket | null>(null);
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const socketRef = useRef(null);
+  const mediaRecorderRef = useRef(null);
 
   const stopListening = useCallback(() => {
     if (socketRef.current) {
@@ -88,7 +87,7 @@ export const useSpeechRecognition = () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       
-      // Deepgram 
+      // Deepgram API Configuration
       const apiKey = import.meta.env.VITE_DEEPGRAM_API_KEY;
       const socket = new WebSocket(
         'wss://api.deepgram.com/v1/listen?model=nova-2&filler_words=true&smart_format=true&interim_results=true',

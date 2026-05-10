@@ -1,16 +1,6 @@
-import { useEffect, type ReactNode } from "react";
+import React, { useEffect } from "react";
 import { X } from "lucide-react";
 import { Button } from "./Button";
-
-interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  title: string;
-  children: ReactNode;
-  footer?: ReactNode;
-  size?: "sm" | "md" | "lg";
-  disableOverlayClick?: boolean; 
-}
 
 const sizes = { sm: "max-w-sm", md: "max-w-md", lg: "max-w-lg" };
 
@@ -22,10 +12,10 @@ export const Modal = ({
   footer, 
   size = "md",
   disableOverlayClick = false 
-}: ModalProps) => {
+}) => {
 
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
+    const handler = (e) => {
       if (e.key === "Escape" && !disableOverlayClick) {
         onClose();
       }

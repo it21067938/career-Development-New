@@ -1,20 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown, Check } from 'lucide-react';
 
-interface SelectProps {
-  label: React.ReactNode;
-  value: string;
-  onChange: (e: { target: { value: string } }) => void;
-  options: { value: string; label: string }[];
-}
-
-export const Select = ({ label, options, value, onChange }: SelectProps) => {
+export const Select = ({ label, options, value, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
       }
     };
@@ -34,10 +27,10 @@ export const Select = ({ label, options, value, onChange }: SelectProps) => {
         <div
           onClick={() => setIsOpen(!isOpen)}
           className={`w-full h-10 pl-4 pr-3.5 flex items-center justify-between text-[13.5px] font-medium 
-                     bg-white dark:bg-gray-900 border rounded-xl cursor-pointer transition-all duration-200
-                     ${isOpen 
-                       ? 'border-primary-500 ring-2 ring-primary-500/10' 
-                       : 'border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700'}`}
+                      bg-white dark:bg-gray-900 border rounded-xl cursor-pointer transition-all duration-200
+                      ${isOpen 
+                        ? 'border-primary-500 ring-2 ring-primary-500/10' 
+                        : 'border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700'}`}
         >
           <span className={`truncate mr-2 ${selectedOption ? 'text-gray-700 dark:text-gray-300' : 'text-gray-400'}`}>
             {selectedOption ? selectedOption.label : 'Select option'}
@@ -61,9 +54,9 @@ export const Select = ({ label, options, value, onChange }: SelectProps) => {
                     setIsOpen(false);
                   }}
                   className={`px-4 py-2.5 text-[13px] flex items-center justify-between cursor-pointer transition-colors
-                             ${value === opt.value 
-                               ? 'bg-primary-50 text-primary-600 dark:bg-primary-900/20 dark:text-primary-400 font-bold' 
-                               : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'}`}
+                              ${value === opt.value 
+                                ? 'bg-primary-50 text-primary-600 dark:bg-primary-900/20 dark:text-primary-400 font-bold' 
+                                : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-white'}`}
                 >
                   <span className="truncate">{opt.label}</span>
                   {value === opt.value && <Check size={14} strokeWidth={3} className="shrink-0 ml-2" />}
